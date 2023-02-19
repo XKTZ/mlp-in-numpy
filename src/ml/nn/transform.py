@@ -1,6 +1,6 @@
 from typing import Union, Tuple
 
-from ml.nn.neural import Layer
+from ml.nn.base import Layer
 import numpy as np
 
 

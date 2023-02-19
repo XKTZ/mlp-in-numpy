@@ -33,7 +33,7 @@ class Linear(Layer):
                       self._grad[1] + np.mean(error, axis=0))
         return error.dot(self.mat)
 
-    def move(self, delta: Union[Tuple[np.ndarray, ...], Tuple[float, ...]]):
+    def update(self, delta: Union[Tuple[np.ndarray, ...], Tuple[float, ...]]):
         self.mat += delta[0]
         if self.bias:
             self.b += delta[1]

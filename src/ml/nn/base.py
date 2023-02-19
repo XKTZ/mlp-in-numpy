@@ -1,7 +1,9 @@
 from typing import List, Dict, Union, Tuple
 
 import numpy as np
+
 from abc import abstractmethod, ABC
+
 class Layer:
     _last: np.ndarray
     _grad: Union[Tuple[np.ndarray, ...], Tuple[float, ...]]
@@ -35,7 +37,7 @@ class Layer:
         return self._grad
 
     @abstractmethod
-    def move(self, delta: Union[Tuple[np.ndarray, ...], Tuple[float, ...]]):
+    def update(self, delta: Union[Tuple[np.ndarray, ...], Tuple[float, ...]]):
         pass
 
     @abstractmethod
@@ -97,9 +99,9 @@ class Optimizer:
     def __init__(self):
         pass
 
-    @abstractmethod
     def step(self, layers: List[Layer]):
-        pass
+        for layer in layers:
+            self.optimize(layer)
 
     @abstractmethod
     def optimize(self, layer: Layer):

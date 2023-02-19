@@ -22,7 +22,7 @@ class Sigmoid(Layer):
     def zero_grad(self):
         pass
 
-    def move(self, delta: Union[Tuple[np.ndarray, ...], Tuple[float, ...]]):
+    def update(self, delta: Union[Tuple[np.ndarray, ...], Tuple[float, ...]]):
         pass
 
 
@@ -48,7 +48,7 @@ class ReLU(Layer):
     def zero_grad(self):
         pass
 
-    def move(self, delta: Union[Tuple[np.ndarray, ...], Tuple[float, ...]]):
+    def update(self, delta: Union[Tuple[np.ndarray, ...], Tuple[float, ...]]):
         pass
 
 
@@ -74,7 +74,7 @@ class LeakyReLU(Layer):
     def zero_grad(self):
         pass
 
-    def move(self, delta: Union[Tuple[np.ndarray, ...], Tuple[float, ...]]):
+    def update(self, delta: Union[Tuple[np.ndarray, ...], Tuple[float, ...]]):
         pass
 
 
@@ -103,5 +103,5 @@ class Softmax(Layer):
     def zero_grad(self):
         pass
 
-    def move(self, delta: Union[Tuple[np.ndarray, ...], Tuple[float, ...]]):
+    def update(self, delta: Union[Tuple[np.ndarray, ...], Tuple[float, ...]]):
         pass
