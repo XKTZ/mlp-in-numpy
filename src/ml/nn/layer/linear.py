@@ -1,7 +1,7 @@
 from typing import Tuple, Union
 
 import numpy as np
-from ml.layer import Layer
+from ml.nn.base import Layer
 
 
 class Linear(Layer):

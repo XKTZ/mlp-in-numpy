@@ -6,7 +6,7 @@ It supports the linear layer and several activation functions like sigmoid and s
 
 It also implements the SGD optimizer. 
 
-There is a sample of the network training on MNIST dataset in the file.
+There is a sample of the network training on MNIST ml.dataset in the file.
 
 Loss by iteration:
 

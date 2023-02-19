@@ -2,7 +2,7 @@ from typing import List, Dict, Union, Tuple
 
 import numpy as np
 
-from ml.neural import Optimizer, Layer
+from ml.nn.base import Optimizer, Layer
 
 
 class GradientDescent(Optimizer):

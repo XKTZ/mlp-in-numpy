@@ -1,5 +1,5 @@
 from typing import Union, Tuple, Callable
-from ml.layer import Layer
+from ml.nn.base import Layer
 import numpy as np
 
 
