@@ -112,14 +112,6 @@ class NeuralNetwork:
     _optim: Optimizer
     _last: np.ndarray
 
-    @staticmethod
-    def _to_batch_at_back(x: np.ndarray) -> np.ndarray:
-        return x.transpose((*(idx + 1 for idx, _ in enumerate(x.shape[1:])), 0))
-
-    @staticmethod
-    def _to_batch_at_front(x: np.ndarray) -> np.ndarray:
-        return x.transpose((-1, *(idx for idx, _ in enumerate(x.shape[1:]))))
-
     def __init__(self, layers: List[Layer], loss: Loss, optim: Optimizer):
         for i in range(len(layers)):
             layers[i].set_id(i)
@@ -129,17 +121,17 @@ class NeuralNetwork:
         self._optim = optim
 
     def forward(self, x: np.ndarray) -> np.ndarray:
-        x = NeuralNetwork._to_batch_at_back(x)
+        x = x
         for layer in self._layers:
             x = layer(x)
         self._last = x
-        return self._to_batch_at_front(x)
+        return x
 
     def __call__(self, x: np.ndarray) -> np.ndarray:
         return self.forward(x)
 
     def loss(self, targ: np.ndarray) -> np.ndarray:
-        loss = self._loss(self._last, NeuralNetwork._to_batch_at_back(targ))
+        loss = self._loss(self._last, targ)
         return loss
 
     def backward(self):

@@ -81,9 +81,9 @@ class LeakyReLU(Layer):
 class Softmax(Layer):
     @staticmethod
     def _softmax(x: np.ndarray) -> np.ndarray:
-        shiftx = x - np.max(x, axis=0)
+        shiftx = x - np.max(x, axis=1).reshape(-1, 1)
         exps = np.exp(shiftx)
-        return exps / np.sum(exps, axis=0)
+        return exps / np.sum(exps, axis=1).reshape(-1, 1)
 
     def __init__(self):
         super(Softmax, self).__init__()
@@ -93,12 +93,12 @@ class Softmax(Layer):
 
     def gradient(self, error: np.ndarray) -> np.ndarray:
         last = self._last
-        n, b = last.shape
+        b, n = last.shape
         S = self._softmax(last)
-        I = np.zeros((n, n, b))
-        for i in range(n):
-            I[i, i] = S[i]
-        return np.einsum("ijk,jk->ik", (-(np.einsum("ik,jk->ijk", S, S)) + I), error)
+        I = np.zeros((b, n, n))
+        diag = np.arange(n)
+        I[:, diag, diag] = S
+        return np.einsum("ij,ijk->ik", error, -np.einsum("ij,ik->ijk", S, S) + I)
 
     def zero_grad(self):
         pass

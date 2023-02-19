@@ -13,10 +13,10 @@ class MSELoss(Loss):
         super(MSELoss, self).__init__(before)
 
     def _loss(self, x: np.ndarray, targ: np.ndarray) -> np.ndarray:
-        return np.mean(np.square(np.linalg.norm((self._out - self._target), axis=0)))
+        return np.mean(np.square(np.linalg.norm(self._out - self._target, axis=1)))
 
     def _gradient(self) -> np.ndarray:
-        return 2 * (self._out - self._target) / self._target.shape[-1]
+        return 2 * (self._out - self._target) / self._target.shape[0]
 
 
 class BinaryCrossEntropyLoss(Loss):
@@ -48,7 +48,7 @@ class BinaryCrossEntropyLoss(Loss):
     def __init__(self, before: Union[int, Layer, List[Layer]] = None, epsilon: float = 1e-9):
         super(BinaryCrossEntropyLoss, self).__init__(BinaryCrossEntropyLoss._get_layer_before(before))
         self.epsilon = epsilon
-        self.clipper = lambda x: np.clip(x, self.epsilon, 1000)
+        self.clipper = lambda x: np.clip(x, self.epsilon, 1. - epsilon)
 
     def _loss(self, x: np.ndarray, targ: np.ndarray) -> np.ndarray:
         x = self.clipper(x)
