@@ -1,6 +1,6 @@
 from typing import List, Dict, Union, Tuple
 
-import numpy as np
+from ml.device import device as np
 
 from ml.nn.base import Optimizer, Layer
 

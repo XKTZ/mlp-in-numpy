@@ -1,7 +1,7 @@
 import math
 from typing import Tuple, Union
 
-import numpy as np
+from ml.device import device as np
 from ml.nn.base import Layer
 
 

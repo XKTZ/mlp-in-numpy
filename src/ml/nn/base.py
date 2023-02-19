@@ -1,8 +1,9 @@
 from typing import List, Dict, Union, Tuple
 
-import numpy as np
-
 from abc import abstractmethod, ABC
+
+from ml.device import device as np
+
 
 class Layer:
     _last: np.ndarray

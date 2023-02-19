@@ -1,6 +1,6 @@
 from typing import Union, Tuple, Callable
 from ml.nn.base import Layer
-import numpy as np
+from ml.device import device as np
 
 
 class Sigmoid(Layer):

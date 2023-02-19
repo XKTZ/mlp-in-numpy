@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Union, Type, Dict, List, Callable
 
-import numpy as np
+from ml.device import device as np
 from abc import abstractmethod
 
 from ml.nn.activation import Softmax, Sigmoid
