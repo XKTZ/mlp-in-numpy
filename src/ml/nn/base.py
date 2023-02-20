@@ -7,7 +7,7 @@ from ml.device import device as np
 
 class Layer:
     _last: np.ndarray
-    _grad: Union[Tuple[np.ndarray, ...], Tuple[float, ...]]
+    _grad: Tuple[Union[np.ndarray, float], ...]
     _id: int
 
     def __init__(self):
@@ -34,11 +34,14 @@ class Layer:
         """
         pass
 
-    def get_gradient(self) -> Union[Tuple[np.ndarray, ...], Tuple[float, ...]]:
+    def get_parameter(self) -> Tuple[Union[np.ndarray, float], ...]:
+        return ()
+
+    def get_gradient(self) -> Tuple[Union[np.ndarray, float], ...]:
         return self._grad
 
     @abstractmethod
-    def update(self, delta: Union[Tuple[np.ndarray, ...], Tuple[float, ...]]):
+    def update(self, delta: Tuple[Union[np.ndarray, float], ...]):
         pass
 
     @abstractmethod
@@ -132,6 +135,9 @@ class NeuralNetwork:
 
     def __call__(self, x: np.ndarray) -> np.ndarray:
         return self.forward(x)
+
+    def set_optimizer(self, optim: Optimizer):
+        self._optim = optim
 
     def loss(self, targ: np.ndarray) -> np.ndarray:
         loss = self._loss(self._last, targ)

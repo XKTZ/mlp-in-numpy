@@ -8,3 +8,9 @@ def set_device(dev: ModuleType):
     global device
 
     device = dev
+
+
+def get_device(dev: ModuleType):
+    global device
+
+    return device

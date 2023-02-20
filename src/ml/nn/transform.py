@@ -16,7 +16,7 @@ class Flatten(Layer):
         shape = self._last.shape
         return error.reshape(shape)
 
-    def move(self, delta: Union[Tuple[np.ndarray, ...], Tuple[float, ...]]):
+    def move(self, delta: Tuple[Union[np.ndarray, float], ...]):
         pass
 
     def zero_grad(self):
