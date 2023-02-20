@@ -32,7 +32,7 @@ class Linear(Layer):
         return x.dot(self.mat.T) + np.full((x.shape[0], self.out_channel), self.b)
 
     def gradient(self, error: np.ndarray) -> np.ndarray:
-        self._grad = (self._grad[0] + (error.T.dot(self._last)) / self._last.shape[0],
+        self._grad = (self._grad[0] + (error.T.dot(self._last)),
                       self._grad[1] + np.mean(error, axis=0))
         return error.dot(self.mat)
 

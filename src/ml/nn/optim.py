@@ -229,7 +229,7 @@ class Adam(Optimizer):
         variance_last = variance[id]
 
         momentum_now = self._perform(grads, momentum_last, beta1)
-        variance_now = self._perform(tuple(x ** 2 for x in grads), variance_last, beta2)
+        variance_now = tuple((x ** 2) * (1 - beta2) + y * beta2 for x, y in zip(grads, variance_last))
 
         momentum[id] = momentum_now
         variance[id] = variance_now

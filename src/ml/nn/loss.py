@@ -55,5 +55,5 @@ class BinaryCrossEntropyLoss(Loss):
         return np.mean(- targ * np.log(x) + (1 - targ) * np.log(1. - x))
 
     def _gradient(self) -> np.ndarray:
-        return self.clipper(1. - self._target) / self.clipper(1. - self._out) - self.clipper(
-            self._target) / self.clipper(self._out)
+        return (self.clipper(1. - self._target) / self.clipper(1. - self._out) - self.clipper(
+            self._target) / self.clipper(self._out)) / self._target.shape[0]
