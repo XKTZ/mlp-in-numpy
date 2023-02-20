@@ -4,7 +4,7 @@ from typing import Union, Type, Dict, List, Callable
 from ml.device import device as np
 from abc import abstractmethod
 
-from ml.nn.activation import Softmax, Sigmoid
+from ml.nn.layer.activation import Softmax, Sigmoid
 from ml.nn.base import Loss, Layer
 
 
