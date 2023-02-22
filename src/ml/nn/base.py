@@ -25,13 +25,6 @@ class Layer:
 
     @abstractmethod
     def gradient(self, error: np.ndarray) -> np.ndarray:
-        """
-        Given error = dC / da_l
-        Then, gradient is: dC / da_l * a_(l-1)^T
-        Returns dc/da_(l-1) = da_l / da_(l-1) * error by chain rule (denominator layout)
-        Example: if it is sigmoid, then return sigmoid(last) * (1 - sigmoid(last)) * dC / da
-        :return dC / d(a - 1)
-        """
         pass
 
     def get_parameter(self) -> Tuple[Union[np.ndarray, float], ...]:
@@ -46,6 +39,12 @@ class Layer:
 
     @abstractmethod
     def zero_grad(self):
+        pass
+
+    def eval(self):
+        pass
+
+    def train(self):
         pass
 
     def load(self, o):
@@ -79,6 +78,14 @@ class Loss:
     @abstractmethod
     def _loss(self, x: np.ndarray, targ: np.ndarray) -> np.ndarray:
         pass
+
+    def train(self):
+        for layer in self._before:
+            layer.train()
+
+    def eval(self):
+        for layer in self._before:
+            layer.eval()
 
     def grad_of(self) -> np.ndarray:
         error = self._gradient()
@@ -154,6 +161,16 @@ class NeuralNetwork:
     def zero_grad(self):
         for layer in self._layers:
             layer.zero_grad()
+
+    def train(self):
+        for layer in self._layers:
+            layer.train()
+        self._loss.train()
+
+    def eval(self):
+        for layer in self._layers:
+            layer.eval()
+        self._loss.eval()
 
     def state_dict(self):
         p = {}

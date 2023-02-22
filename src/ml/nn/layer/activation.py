@@ -78,29 +78,6 @@ class LeakyReLU(Layer):
         pass
 
 
-class Dropout(Layer):
-    prob: float
-    last_mask: np.ndarray
-
-    def __init__(self, prob: float):
-        super().__init__()
-        assert prob <= 1
-        self.prob = prob
-
-    def forward(self, x: np.ndarray) -> np.ndarray:
-        self.last_mask = np.random.choice(a=[0, 1], p=[self.prob, 1 - self.prob], size=x.shape)
-        return x * self.last_mask
-
-    def gradient(self, error: np.ndarray) -> np.ndarray:
-        return error * self.last_mask
-
-    def zero_grad(self):
-        self._grad = ()
-
-    def update(self, delta: Tuple[Union[np.ndarray, float], ...]):
-        pass
-
-
 class Softmax(Layer):
     @staticmethod
     def _softmax(x: np.ndarray) -> np.ndarray:
