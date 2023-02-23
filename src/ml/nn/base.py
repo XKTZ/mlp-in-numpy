@@ -178,6 +178,6 @@ class NeuralNetwork:
             p[i.id()] = i.save()
         return p
 
-    def load_state_dict(self, st: Dict[str, object]):
+    def load_state_dict(self, st: Dict):
         for layer in self._layers:
-            layer.load(st[str(layer.id())])
+            layer.load(st[layer.id()])

@@ -33,7 +33,7 @@ class Linear(Layer):
 
     def gradient(self, error: np.ndarray) -> np.ndarray:
         self._grad = (self._grad[0] + (error.T.dot(self._last)),
-                      self._grad[1] + np.mean(error, axis=0))
+                      self._grad[1] + np.sum(error, axis=0))
         return error.dot(self.mat)
 
     def update(self, delta: Tuple[Union[np.ndarray, float], ...]):
@@ -47,9 +47,11 @@ class Linear(Layer):
     def load(self, o):
         self.mat = np.array(o["w"])
         self.b = np.array(o["b"])
+        self.bias = o["biased"]
 
     def save(self) -> object:
         return {
             "w": self.mat.tolist(),
-            "b": self.b.tolist()
+            "b": self.b.tolist(),
+            "biased": self.bias
         }
