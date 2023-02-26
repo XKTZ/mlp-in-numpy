@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import numpy as np
+from ml.device import device as np
 from urllib import request
 import gzip
 import pickle
@@ -65,4 +65,3 @@ def load(path):
     with open(f"{path}/mnist.pkl", 'rb') as f:
         mnist = pickle.load(f)
     return mnist["training_images"], mnist["training_labels"], mnist["test_images"], mnist["test_labels"]
-
