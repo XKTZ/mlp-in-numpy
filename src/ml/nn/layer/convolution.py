@@ -25,6 +25,11 @@ def raw_conv2d(img: np.ndarray, ker: np.ndarray) -> np.ndarray:
     :param stride: stride
     :return: conved image
     """
+    batched: bool = True
+
+    if len(img.shape) == 3:
+        img = np.expand_dims(img, 0)
+        batched = False
 
     ker_out, ker_c, ker_h, ker_w = ker.shape
 
@@ -39,9 +44,20 @@ def raw_conv2d(img: np.ndarray, ker: np.ndarray) -> np.ndarray:
     q
     """
 
-    return np.einsum("bihwjk,oijk->bohw",
-                     slide_window(img, window_shape=(ker_h, ker_w), axis=(2, 3)),
-                     ker)
+    img_b, img_c, img_h, img_w = img.shape
+    img = np.transpose(img, (0, 2, 3, 1))
+    windows = slide_window(img, window_shape=(ker_h, ker_w), axis=(1, 2))
+    expect_h, expect_w = windows.shape[1], windows.shape[2]
+    windows = windows.reshape((-1, img_c, ker_h, ker_w))
+
+    result = np.einsum("bijk,oijk->bo", windows, ker)
+    result = result.reshape((img_b, expect_h, expect_w, ker_out))
+    result = np.transpose(result, (0, 3, 1, 2))
+
+    if not batched:
+        result = result.squeeze(0)
+
+    return result
 
 
 class Conv2d(Layer):

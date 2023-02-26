@@ -7,3 +7,7 @@ data
 model.json
 
 dist
+
+build/
+
+dist/
