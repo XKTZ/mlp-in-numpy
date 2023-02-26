@@ -1,9 +1,8 @@
 from abc import abstractmethod
 from typing import Tuple, Union
 
-import numpy as np
-
 from ml.nn.base import Layer
+from ml.device import device as np
 
 
 class BasicTrainNormalizationLayer(Layer):
