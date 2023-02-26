@@ -72,7 +72,7 @@ class Conv2d(Layer):
                  kernel: Union[int, Tuple[int, int]],
                  padding: Union[int, Tuple[int, int], Tuple[int, int, int, int]] = 0,
                  stride: int = 1, bias: bool = True,
-                 dtype = default_cont_type):
+                 dtype=default_cont_type):
         super().__init__()
 
         self.channel_in = input_dim
@@ -90,11 +90,12 @@ class Conv2d(Layer):
         self.pad = padding
         self.stride = stride
 
-        self.kernel = np.random.normal(0, math.sqrt(2 / output_dim), size=(output_dim, input_dim, *kernel))\
+        self.kernel = np.random.uniform(- 1 / math.sqrt(input_dim), 1 / math.sqrt(input_dim),
+                                        size=(output_dim, input_dim, *kernel)) \
             .astype(dtype)
         self.biased = bias
         if bias:
-            self.bias = np.random.uniform(- 1 / math.sqrt(output_dim), 1 / math.sqrt(output_dim), size=(output_dim,))\
+            self.bias = np.random.uniform(- 1 / math.sqrt(input_dim), 1 / math.sqrt(input_dim), size=(output_dim,)) \
                 .astype(dtype)
         else:
             self.bias = np.zeros((output_dim,), dtype=dtype)

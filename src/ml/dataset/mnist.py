@@ -65,6 +65,6 @@ def load(path, dtype = default_cont_type):
     with open(f"{path}/mnist.pkl", 'rb') as f:
         mnist = pickle.load(f)
     return mnist["training_images"].astype(dtype), \
-        mnist["training_labels"].astype(dtype), \
+        mnist["training_labels"].astype(int), \
         mnist["test_images"].astype(dtype), \
-        mnist["test_labels"].astype(dtype)
+        mnist["test_labels"].astype(int)
