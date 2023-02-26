@@ -1,7 +1,7 @@
 import math
 from typing import Tuple, Union
 
-from ml.device import device as np
+from ml.device import device as np, default_cont_type
 from ml.nn.base import Layer
 
 
@@ -13,17 +13,19 @@ class Linear(Layer):
     mat: np.ndarray
     b: np.ndarray
 
-    def __init__(self, in_channel: int, out_channel: int, bias: bool = True):
+    def __init__(self, in_channel: int, out_channel: int, bias: bool = True, dtype = default_cont_type):
         super(Linear, self).__init__()
         self.in_channel = in_channel
         self.out_channel = out_channel
         self.bias = bias
 
         if self.bias:
-            self.b = np.random.uniform(- 1 / math.sqrt(in_channel), 1 / math.sqrt(in_channel), size=out_channel)
+            self.b = np.random.uniform(- 1 / math.sqrt(in_channel), 1 / math.sqrt(in_channel), size=out_channel) \
+                .astype(dtype)
         else:
-            self.b = np.zeros(out_channel)
-        self.mat = np.random.normal(0, math.sqrt(2 / in_channel), size=(out_channel, in_channel))
+            self.b = np.zeros(out_channel, dtype=dtype)
+        self.mat = np.random.normal(0, math.sqrt(2 / in_channel), size=(out_channel, in_channel))\
+            .astype(dtype)
 
     def get_parameter(self) -> Tuple[Union[np.ndarray, float], ...]:
         return self.mat, self.b

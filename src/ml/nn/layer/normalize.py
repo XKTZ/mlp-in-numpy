@@ -2,7 +2,7 @@ from abc import abstractmethod
 from typing import Tuple, Union
 
 from ml.nn.base import Layer
-from ml.device import device as np
+from ml.device import device as np, default_cont_type
 
 
 class BasicTrainNormalizationLayer(Layer):
@@ -43,13 +43,15 @@ class Dropout(BasicTrainNormalizationLayer):
     prob: float
     last_mask: np.ndarray
 
-    def __init__(self, prob: float):
+    def __init__(self, prob: float, dtype = default_cont_type):
         super().__init__()
         assert prob <= 1
         self.prob = prob
+        self.dtype = dtype
 
     def train_mode_forward(self, x: np.ndarray) -> np.ndarray:
-        self.last_mask = np.random.choice(a=[0, 1], p=[self.prob, 1 - self.prob], size=x.shape)
+        self.last_mask = np.random.choice(a=[0, 1], p=[self.prob, 1 - self.prob], size=x.shape)\
+            .astype(self.dtype)
         return x * self.last_mask
 
     def train_mode_gradient(self, error: np.ndarray) -> np.ndarray:

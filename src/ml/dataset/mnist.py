@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from ml.device import device as np
+from ml.device import device as np, default_cont_type
 from urllib import request
 import gzip
 import pickle
@@ -47,7 +47,7 @@ def save_mnist(path):
     mnist = {}
     for name in filename[:2]:
         with gzip.open(f"{path}/{name[1]}", 'rb') as f:
-            mnist[name[0]] = np.frombuffer(f.read(), np.uint8, offset=16).reshape(-1, 28 * 28)
+            mnist[name[0]] = np.frombuffer(f.read(), np.uint8, offset=16).reshape(-1, 1, 28, 28)
     for name in filename[-2:]:
         with gzip.open(f"{path}/{name[1]}", 'rb') as f:
             mnist[name[0]] = np.frombuffer(f.read(), np.uint8, offset=8)
@@ -61,7 +61,10 @@ def init(path):
     save_mnist(path)
 
 
-def load(path):
+def load(path, dtype = default_cont_type):
     with open(f"{path}/mnist.pkl", 'rb') as f:
         mnist = pickle.load(f)
-    return mnist["training_images"], mnist["training_labels"], mnist["test_images"], mnist["test_labels"]
+    return mnist["training_images"].astype(dtype), \
+        mnist["training_labels"].astype(dtype), \
+        mnist["test_images"].astype(dtype), \
+        mnist["test_labels"].astype(dtype)
