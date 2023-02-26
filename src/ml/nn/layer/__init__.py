@@ -3,3 +3,4 @@ from ml.nn.layer.linear import Linear
 from ml.nn.layer.convolution import Conv2d
 from ml.nn.layer.normalize import Dropout
 from ml.nn.layer.transform import Reshape, Flatten
+from ml.nn.layer.pooling import MaxPool2d
