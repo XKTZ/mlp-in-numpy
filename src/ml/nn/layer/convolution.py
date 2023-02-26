@@ -4,6 +4,18 @@ from ml.nn.base import Layer
 import math
 
 
+def slide_window(x: np.ndarray, window_shape: Tuple[int, ...], axis: Tuple[int, ...]) -> np.ndarray:
+    out_strides = x.strides + tuple(x.strides[ax] for ax in axis)
+
+    x_shape_trimmed = list(x.shape)
+
+    for ax, dim in zip(axis, window_shape):
+        x_shape_trimmed[ax] -= dim - 1
+
+    out_shape = tuple(x_shape_trimmed) + window_shape
+    return np.lib.stride_tricks.as_strided(x, strides=out_strides, shape=out_shape)
+
+
 def raw_conv2d(img: np.ndarray, ker: np.ndarray) -> np.ndarray:
     """
     Do a 2d convolution of [B, C, H, W] to a kernel [C_out, C, H, W] with padding and stride
@@ -27,9 +39,8 @@ def raw_conv2d(img: np.ndarray, ker: np.ndarray) -> np.ndarray:
     q
     """
 
-    return np.einsum("bphwijk,oijk->bohw",
-                     np.lib.stride_tricks.sliding_window_view(img, window_shape=(ker_c, ker_h, ker_w),
-                                                              axis=(1, 2, 3)),
+    return np.einsum("bihwjk,oijk->bohw",
+                     slide_window(img, window_shape=(ker_h, ker_w), axis=(2, 3)),
                      ker)
 
 
