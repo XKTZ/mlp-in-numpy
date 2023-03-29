@@ -2,7 +2,7 @@ from typing import List, Dict, Union, Tuple
 
 from abc import abstractmethod, ABC
 
-from ml.device import device as np
+from mlnp.device import device as np
 
 
 class Layer:

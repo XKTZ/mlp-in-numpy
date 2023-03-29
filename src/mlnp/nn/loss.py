@@ -1,11 +1,11 @@
 from enum import Enum
 from typing import Union, Type, Dict, List, Callable
 
-from ml.device import device as np
+from mlnp.device import device as np
 from abc import abstractmethod
 
-from ml.nn.layer.activation import Softmax, Sigmoid
-from ml.nn.base import Loss, Layer
+from mlnp.nn.layer.activation import Softmax, Sigmoid
+from mlnp.nn.base import Loss, Layer
 
 
 class MSELoss(Loss):

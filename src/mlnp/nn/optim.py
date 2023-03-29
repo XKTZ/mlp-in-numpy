@@ -1,8 +1,8 @@
 from typing import List, Dict, Union, Tuple
 
-from ml.device import device as np
+from mlnp.device import device as np
 
-from ml.nn.base import Optimizer, Layer
+from mlnp.nn.base import Optimizer, Layer
 
 
 class GradientDescent(Optimizer):

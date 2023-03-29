@@ -1,7 +1,7 @@
 from typing import Union, Tuple
 
-from ml.nn.base import Layer
-from ml.device import device as np
+from mlnp.nn.base import Layer
+from mlnp.device import device as np
 
 
 class Reshape(Layer):

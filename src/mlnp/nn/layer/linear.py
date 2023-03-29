@@ -1,8 +1,8 @@
 import math
 from typing import Tuple, Union
 
-from ml.device import device as np, default_cont_type
-from ml.nn.base import Layer
+from mlnp.device import device as np, default_cont_type
+from mlnp.nn.base import Layer
 
 
 class Linear(Layer):

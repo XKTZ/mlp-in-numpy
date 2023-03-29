@@ -1,6 +1,6 @@
 from typing import Union, Tuple, Callable
-from ml.nn.base import Layer
-from ml.device import device as np, default_cont_type
+from mlnp.nn.base import Layer
+from mlnp.device import device as np, default_cont_type
 
 
 class Sigmoid(Layer):

@@ -1,5 +1,5 @@
-from ml.device import device as np
-from ml.nn.base import Layer
+from mlnp.device import device as np
+from mlnp.nn.base import Layer
 from typing import Tuple, Union
 
 

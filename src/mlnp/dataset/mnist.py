@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from ml.device import device as np, default_cont_type
+from mlnp.device import device as np, default_cont_type
 from urllib import request
 import gzip
 import pickle
