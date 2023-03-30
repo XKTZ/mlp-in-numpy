@@ -34,7 +34,7 @@ class ReLU(Layer):
 
     @staticmethod
     def _drelu(x: np.ndarray, dtype=default_cont_type) -> np.ndarray:
-        return np.where(x > 0, 1, 0).astype(dtype)
+        return ((x > 0) * 1.).astype(dtype)
 
     def __init__(self, dtype=default_cont_type):
         super(ReLU, self).__init__()
