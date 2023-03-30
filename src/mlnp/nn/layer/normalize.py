@@ -50,7 +50,7 @@ class Dropout(BasicTrainNormalizationLayer):
         self.dtype = dtype
 
     def train_mode_forward(self, x: np.ndarray) -> np.ndarray:
-        self.last_mask = np.random.choice(a=[0, 1], p=[self.prob, 1 - self.prob], size=x.shape)\
+        self.last_mask = np.random.choice(a=[0, 1 / (1 - self.prob)], p=[self.prob, 1 - self.prob], size=x.shape)\
             .astype(self.dtype)
         return x * self.last_mask
 
